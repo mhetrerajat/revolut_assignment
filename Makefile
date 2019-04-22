@@ -23,7 +23,7 @@ lint:
 	$(PYTHON) pylint $(PROJECT_HOME) > pylint.log
 
 test:
-	$(PYTHON) pytest
+	$(PYTHON) -m unittest
 
 coverage:
 	coverage report --show-missing
