@@ -10,16 +10,14 @@ class Parser(object):
     def validate(self):
         # Validate array
         if not isinstance(self.data, list):
-            raise TypeError(
-                "Input should be a JSON Array of JSON Array Objects")
+            raise TypeError("Input should be a JSON Array of JSON Objects")
         elif not len(self.data):
             raise ValueError("Input JSON Array can not be empty")
 
         # Validate array items
         for item in self.data:
             if not isinstance(item, dict):
-                raise TypeError(
-                    "Input should be a JSON Array of JSON Array Objects")
+                raise TypeError("Input should be a JSON Array of JSON Objects")
 
             invalid_levels = set(self.nesting_levels).difference(item.keys())
             if invalid_levels:

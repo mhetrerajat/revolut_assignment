@@ -6,6 +6,8 @@ from flask import jsonify, make_response
 
 from config import config
 
+from app.exceptions import ApiException
+
 db = SQLAlchemy()
 auth = HTTPBasicAuth()
 
@@ -22,6 +24,10 @@ def create_app(config_name):
 
     db.init_app(app)
 
+    @app.errorhandler(ApiException)
+    def handle_api_error(error):
+        return error.get_response()
+
     api = Api(app, prefix="/api/v1")
 
     from app.resources.hello import Hello
@@ -33,6 +39,9 @@ def create_app(config_name):
 
     from app.resources.deposit_list import DepositList
     api.add_resource(DepositList, '/deposit')
+
+    from app.resources.nest_api import Nest
+    api.add_resource(Nest, '/deposit/nest')
 
     with app.app_context():
         db.create_all()
