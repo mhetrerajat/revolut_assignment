@@ -1,6 +1,6 @@
-from .context import app
-
 import unittest
+
+from .context import app
 from app.utils.parser import Parser
 
 
