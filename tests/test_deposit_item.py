@@ -69,6 +69,16 @@ class DepositItemTestCases(BaseDepositResourceTestCase):
             self.assertEqual(data.get('message'), 'Unauthorized access')
             self.assertEqual(response.status_code, 401)
 
+    def test_deposit_item_get_invalid_deposit_id(self):
+        with self.client:
+            # Auth
+            register_user(self, self.username, self.password)
+
+            # Deposit Item Get API
+            response = make_deposit_item_get_api_request(
+                self, self.username, self.password, "a")
+            self.assert404(response)
+
     def test_deposit_item_update_api(self):
         # Auth
         register_user(self, self.username, self.password)
@@ -93,6 +103,16 @@ class DepositItemTestCases(BaseDepositResourceTestCase):
         self.assertEqual(data.get('data', {}).get('id'), deposit_id)
 
         self.assertEqual(data.get('data', {}).get('amount'), 1000)
+
+    def test_deposit_item_update_invalid_deposit_id(self):
+        with self.client:
+            # Auth
+            register_user(self, self.username, self.password)
+
+            # Deposit Item Update API
+            response = make_deposit_item_update_api_request(
+                self, self.username, self.password, "a", {'amount': 1000})
+            self.assert404(response)
 
     def test_deposit_item_update_unauthorized_request(self):
         with self.client:
@@ -133,3 +153,13 @@ class DepositItemTestCases(BaseDepositResourceTestCase):
             data = json.loads(response.data.decode())
             self.assertEqual(data.get('message'), 'Unauthorized access')
             self.assertEqual(response.status_code, 401)
+
+    def test_deposit_item_delete_invalid_deposit_id(self):
+        with self.client:
+            # Auth
+            register_user(self, self.username, self.password)
+
+            # Deposit Item Delete API
+            response = make_deposit_item_delete_api_request(
+                self, self.username, self.password, "a")
+            self.assert404(response)

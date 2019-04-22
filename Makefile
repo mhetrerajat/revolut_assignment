@@ -25,10 +25,6 @@ lint:
 test:
 	$(PYTHON) -m unittest
 
-coverage:
-	coverage report --show-missing
-
-
 requirements:
 	$(PYTHON) pip freeze > requirements.txt
 
