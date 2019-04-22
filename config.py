@@ -8,7 +8,6 @@ class Config(object):
         'SECRET_KEY') or 'wJ6SOHBzXEnrZ5ZUYduZleR0kGrah5MTGMtytR9gUrg='
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True
-    SSL_REDIRECT = False
 
     @staticmethod
     def init_app(app):
@@ -20,4 +19,12 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL')
 
 
-config = {'development': DevelopmentConfig, 'default': DevelopmentConfig}
+class ProductionConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+
+
+config = {
+    'development': DevelopmentConfig,
+    'default': DevelopmentConfig,
+    'production': ProductionConfig
+}

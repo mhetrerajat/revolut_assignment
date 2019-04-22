@@ -35,8 +35,7 @@ class DepositItem(Resource):
 
     def get(self, deposit_id):
         user = User.query.filter_by(username=auth.username()).first()
-        deposit = Deposit.query.filter_by(id=deposit_id,
-                                          user=user.id).first()
+        deposit = Deposit.query.filter_by(id=deposit_id, user=user.id).first()
 
         if not deposit:
             raise ApiException("Invalid deposit id.")

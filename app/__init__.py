@@ -49,7 +49,4 @@ def create_app(config_name):
     from app.resources.deposit_list import DepositList
     api.add_resource(DepositList, '/deposit')
 
-    with app.app_context():
-        db.create_all()
-
     return app
