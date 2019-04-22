@@ -21,8 +21,7 @@ class Register(Resource):
         if user:
             abort(400)
 
-        user = User(username=args.username)
-        user.hash_password(args.password)
+        user = User(args.username, args.password)
         db.session.add(user)
         db.session.commit()
 
