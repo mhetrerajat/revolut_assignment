@@ -7,7 +7,7 @@ from app.exceptions import ApiException
 from app.models import User
 
 
-class Register(Resource):
+class Login(Resource):
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('username',
@@ -19,21 +19,16 @@ class Register(Resource):
                                    required=True,
                                    location="json")
 
-        super(Register, self).__init__()
+        super(Login, self).__init__()
 
     def post(self):
         args = self.reqparse.parse_args()
 
         user = User.query.filter_by(username=args.username).first()
-        if user:
-            raise ApiException(
-                "User {0} already exists. Please use different username.".
-                format(args.username),
-                status=401)
 
-        user = User(args.username, args.password)
-        db.session.add(user)
-        db.session.commit()
+        if not user or not user.verify_password(args.password):
+            raise ApiException("Invalid username or password.")
+
         auth_token = user.encode_auth_token(user.id)
 
         response = {

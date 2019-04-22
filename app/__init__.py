@@ -37,6 +37,9 @@ def create_app(config_name):
     from app.resources.register import Register
     api.add_resource(Register, '/register')
 
+    from app.resources.login import Login
+    api.add_resource(Login, '/login')
+
     from app.resources.deposit_list import DepositList
     api.add_resource(DepositList, '/deposit')
 
