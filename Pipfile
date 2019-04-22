@@ -16,7 +16,6 @@ flask-restful = "*"
 python-dotenv = "*"
 flask-httpauth = "*"
 passlib = "*"
-pyjwt = "*"
 
 [requires]
 python_version = "3.6"

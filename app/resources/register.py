@@ -34,11 +34,12 @@ class Register(Resource):
         user = User(args.username, args.password)
         db.session.add(user)
         db.session.commit()
-        auth_token = user.encode_auth_token(user.id)
 
         response = {
-            'data': auth_token.decode('utf-8'),
-            'message': None,
+            'data': {
+                'username': args.username
+            },
+            'message': "User created successfully!",
             'status': 'success'
         }
 

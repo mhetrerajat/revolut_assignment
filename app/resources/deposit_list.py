@@ -1,6 +1,5 @@
 from flask_restful import Resource
 from flask.json import jsonify
-
 from app import auth, db
 
 

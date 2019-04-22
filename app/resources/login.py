@@ -29,10 +29,10 @@ class Login(Resource):
         if not user or not user.verify_password(args.password):
             raise ApiException("Invalid username or password.")
 
-        auth_token = user.encode_auth_token(user.id)
-
         response = {
-            'data': auth_token.decode('utf-8'),
+            'data': {
+                'username': user.username
+            },
             'message': None,
             'status': 'success'
         }
