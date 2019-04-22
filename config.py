@@ -23,8 +23,13 @@ class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 
+class TestConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL')
+
+
 config = {
     'development': DevelopmentConfig,
     'default': DevelopmentConfig,
-    'production': ProductionConfig
+    'production': ProductionConfig,
+    'test': TestConfig
 }

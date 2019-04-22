@@ -16,8 +16,8 @@ pretty:
 	find . -name '*.pyc' -delete
 	find . -type d -name '__pycache__' -delete
 	isort -rc --atomic $(PROJECT_HOME)
-	find . -type f -name "*.py" -exec $(PYTHON) yapf --recursive --parallel --in-place --verbose --style=pep8 {} \;
-	find . -type f -name "*.py" -exec $(PYTHON) autoflake --in-place --remove-unused-variables {} \;
+	find . -type f -name "*.py" -exec $(PYTHON) -m yapf --recursive --parallel --in-place --verbose --style=pep8 {} \;
+	find . -type f -name "*.py" -exec $(PYTHON) -m autoflake --in-place --remove-unused-variables {} \;
 
 lint:
 	$(PYTHON) pylint $(PROJECT_HOME) > pylint.log

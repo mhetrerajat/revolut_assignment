@@ -1,6 +1,6 @@
-from datetime import datetime, timedelta
-
 import enum
+from datetime import datetime
+
 from flask import current_app as app
 from passlib.apps import custom_app_context as pwd_context
 from sqlalchemy.types import Enum
@@ -24,7 +24,7 @@ class User(db.Model):
         self.registered_on = datetime.utcnow()
 
     def hash_password(self, password):
-        return pwd_context.encrypt(password)
+        return pwd_context.hash(password)
 
     @staticmethod
     @auth.verify_password

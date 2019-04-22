@@ -1,7 +1,6 @@
 from flask_restful import fields
 
 from app.models import DepositCurrency
-
 from app.utils.fields import DepositCurrencyField
 
 DepositSchema = {

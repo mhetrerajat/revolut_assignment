@@ -1,8 +1,6 @@
 import argparse
 import json
 import sys
-from collections import MutableMapping
-from functools import reduce
 
 from app.utils.parser import Parser
 

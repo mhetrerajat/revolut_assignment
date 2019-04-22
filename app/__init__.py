@@ -1,12 +1,10 @@
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from flask_httpauth import HTTPBasicAuth
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
-from flask import jsonify, make_response
-
-from config import config
 
 from app.exceptions import ApiException
+from config import config
 
 db = SQLAlchemy()
 auth = HTTPBasicAuth()

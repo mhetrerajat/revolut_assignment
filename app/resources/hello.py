@@ -1,5 +1,5 @@
-from flask_restful import Resource
 from flask.json import jsonify
+from flask_restful import Resource
 
 
 class Hello(Resource):

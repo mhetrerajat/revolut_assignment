@@ -8,6 +8,8 @@ yapf = "*"
 isort = "*"
 pylint = "*"
 pylint-flask = "*"
+flask-testing = "*"
+autoflake = "*"
 
 [packages]
 dpath = "*"
