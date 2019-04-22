@@ -27,7 +27,7 @@ class Register(Resource):
         args = self.reqparse.parse_args()
 
         if any([not args.username, not args.password]):
-            raise RequirementParameterMissing([k for k, _ in args.items()])
+            raise RequirementParameterMissing(args)
 
         user = User.query.filter_by(username=args.username).first()
         if user:

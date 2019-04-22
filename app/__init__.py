@@ -12,7 +12,7 @@ auth = HTTPBasicAuth()
 
 @auth.error_handler
 def unauthorized():
-    return make_response(jsonify({'message': 'Unauthorized access'}), 403)
+    return make_response(jsonify({'message': 'Unauthorized access'}), 401)
 
 
 def create_app(config_name):

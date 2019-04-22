@@ -69,4 +69,4 @@ class DepositList(Resource):
                 'data': deposit_item,
                 'message': 'Deposited!',
                 'status': 'success'
-            }))
+            }), 201)

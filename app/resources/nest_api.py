@@ -2,7 +2,7 @@ from flask.json import jsonify
 from flask_restful import Resource, reqparse
 
 from app import auth
-from app.exceptions import ApiException
+from app.exceptions import ApiException, RequirementParameterMissing
 from app.utils.parser import Parser
 
 
@@ -26,6 +26,9 @@ class Nest(Resource):
 
     def post(self):
         args = self.reqparse.parse_args()
+
+        if any([not args.data, not args.nesting_levels]):
+            raise RequirementParameterMissing(args)
 
         try:
             p = Parser(args.data, args.nesting_levels)

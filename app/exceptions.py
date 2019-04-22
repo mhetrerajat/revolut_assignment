@@ -24,6 +24,8 @@ class UserAlreadyExistsException(ApiException):
 
 class RequirementParameterMissing(ApiException):
     def __init__(self, params, *args, **kwargs):
+        params = [k for k, _ in params.items()]
         message = "One or more required parameters are missing. Required parameters are : {0}".format(
             ", ".join(params))
-        super(RequirementParameterMissing, self).__init__(message, *args, **kwargs)
+        super(RequirementParameterMissing,
+              self).__init__(message, *args, **kwargs)
