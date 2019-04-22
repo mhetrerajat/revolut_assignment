@@ -22,29 +22,34 @@ def create_app(config_name):
 
     db.init_app(app)
 
-    @app.errorhandler(ApiException)
-    def handle_api_error(error):
-        return error.get_response()
-
     api = Api(app, prefix="/api/v1")
+    auth_api = Api(app, prefix='/api/v1/auth')
+    deposit_api = Api(app, prefix='/api/v1/deposit')
 
     from app.resources.hello import Hello
 
     api.add_resource(Hello, '/')
 
+    # Auth Resources
     from app.resources.register import Register
-    api.add_resource(Register, '/register')
+    auth_api.add_resource(Register, '/register')
 
     from app.resources.login import Login
-    api.add_resource(Login, '/login')
+    auth_api.add_resource(Login, '/login')
+
+    # Deposit Resources
+    from app.resources.nest_api import Nest
+    deposit_api.add_resource(Nest, '/nest')
 
     from app.resources.deposit_item import DepositItem
-    api.add_resource(DepositItem, '/deposit/<int:deposit_id>')
-
-    from app.resources.nest_api import Nest
-    api.add_resource(Nest, '/deposit/nest')
+    deposit_api.add_resource(DepositItem, '/<int:deposit_id>')
 
     from app.resources.deposit_list import DepositList
-    api.add_resource(DepositList, '/deposit')
+    deposit_api.add_resource(DepositList, '/')
+
+    # Error Handler
+    @app.errorhandler(ApiException)
+    def handle_api_error(error):
+        return error.get_response()
 
     return app

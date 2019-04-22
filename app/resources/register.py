@@ -3,7 +3,7 @@ from flask.json import jsonify
 from flask_restful import Resource, reqparse
 
 from app import db
-from app.exceptions import ApiException
+from app.exceptions import ApiException, UserAlreadyExistsException, RequirementParameterMissing
 from app.models import User
 
 
@@ -13,23 +13,25 @@ class Register(Resource):
         self.reqparse.add_argument('username',
                                    type=str,
                                    required=True,
-                                   location="json")
+                                   location="json",
+                                   help="username cannot be blank!")
         self.reqparse.add_argument('password',
                                    type=str,
                                    required=True,
-                                   location="json")
+                                   location="json",
+                                   help="password cannot be blank!")
 
         super(Register, self).__init__()
 
     def post(self):
         args = self.reqparse.parse_args()
 
+        if any([not args.username, not args.password]):
+            raise RequirementParameterMissing([k for k, _ in args.items()])
+
         user = User.query.filter_by(username=args.username).first()
         if user:
-            raise ApiException(
-                "User {0} already exists. Please use different username.".
-                format(args.username),
-                status=401)
+            raise UserAlreadyExistsException(args.username)
 
         user = User(args.username, args.password)
         db.session.add(user)

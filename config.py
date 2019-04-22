@@ -8,6 +8,8 @@ class Config(object):
         'SECRET_KEY') or 'wJ6SOHBzXEnrZ5ZUYduZleR0kGrah5MTGMtytR9gUrg='
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True
+    PROPAGATE_EXCEPTIONS = True
+    DEBUG = True
 
     @staticmethod
     def init_app(app):
@@ -15,11 +17,11 @@ class Config(object):
 
 
 class DevelopmentConfig(Config):
-    DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL')
 
 
 class ProductionConfig(Config):
+    DEBUG = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 
