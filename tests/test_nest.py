@@ -39,7 +39,7 @@ class NestApiTestCases(BaseDepositResourceTestCase):
             data = json.loads(response.data.decode())
 
             self.assertEqual(data.get('status'), 'success')
-            self.assertEqual(response.status_code, 200)
+            self.assert200(response)
             self.assertEqual(data.get('data', {}), self.expected_response)
 
     def test_nest_api_unauthorized_request(self):
@@ -66,7 +66,7 @@ class NestApiTestCases(BaseDepositResourceTestCase):
         data = json.loads(response.data.decode())
 
         self.assertEqual(data.get('status'), 'failed')
-        self.assertEqual(response.status_code, 400)
+        self.assert400(response)
 
     def test_nest_api_invalid_input(self):
         """
@@ -82,4 +82,4 @@ class NestApiTestCases(BaseDepositResourceTestCase):
         data = json.loads(response.data.decode())
 
         self.assertEqual(data.get('status'), 'failed')
-        self.assertEqual(response.status_code, 400)
+        self.assert400(response)

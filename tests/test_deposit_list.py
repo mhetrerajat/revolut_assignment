@@ -61,7 +61,7 @@ class DepositListTestCases(BaseDepositResourceTestCase):
                 self, self.username, self.password, self.data[0])
             data = json.loads(response.data.decode())
             self.assertEqual(data.get('message'), 'Unauthorized access')
-            self.assertEqual(response.status_code, 401)
+            self.assert401(response)
 
     def test_deposit_list_post_missing_input(self):
         """
@@ -78,7 +78,7 @@ class DepositListTestCases(BaseDepositResourceTestCase):
         data = json.loads(response.data.decode())
 
         self.assertEqual(data.get('status'), 'failed')
-        self.assertEqual(response.status_code, 400)
+        self.assert400(response)
 
     def test_deposit_list_post_invalid_input(self):
         """
@@ -94,7 +94,7 @@ class DepositListTestCases(BaseDepositResourceTestCase):
                                                       self.password, data)
         data = json.loads(response.data.decode())
 
-        self.assertEqual(response.status_code, 400)
+        self.assert400(response)
 
     def test_deposit_list_get_request(self):
         """
@@ -112,7 +112,7 @@ class DepositListTestCases(BaseDepositResourceTestCase):
             data = json.loads(response.data.decode())
 
             self.assertEqual(data.get('status'), 'success')
-            self.assertEqual(response.status_code, 200)
+            self.assert200(response)
             self.assertEqual(len(data.get('data', [])), len(self.data))
 
     def test_deposit_list_get_unauthorized_request(self):
@@ -124,4 +124,4 @@ class DepositListTestCases(BaseDepositResourceTestCase):
                 self, self.username, self.password)
             data = json.loads(response.data.decode())
             self.assertEqual(data.get('message'), 'Unauthorized access')
-            self.assertEqual(response.status_code, 401)
+            self.assert401(response)

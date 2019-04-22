@@ -33,7 +33,7 @@ class AuthResourcesTestCase(BaseTestCase):
             response = register_user(self, 'admin', 'admin')
             data = json.loads(response.data.decode())
 
-            self.assertEqual(response.status_code, 400)
+            self.assert400(response)
             self.assertEqual(data.get('status'), 'failed')
 
     def test_missing_params(self):
@@ -41,5 +41,5 @@ class AuthResourcesTestCase(BaseTestCase):
             response = register_user(self, None, 'admin')
             data = json.loads(response.data.decode())
 
-            self.assertEqual(response.status_code, 400)
+            self.assert400(response)
             self.assertEqual(data.get('status'), 'failed')

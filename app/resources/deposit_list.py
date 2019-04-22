@@ -69,6 +69,8 @@ class DepositList(Resource):
         db.session.add(deposit)
         db.session.commit()
 
+        deposit_item.update({'id': deposit.id})
+
         return make_response(
             jsonify({
                 'data': deposit_item,
