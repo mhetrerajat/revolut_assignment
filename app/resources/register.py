@@ -3,7 +3,8 @@ from flask.json import jsonify
 from flask_restful import Resource, reqparse
 
 from app import db
-from app.exceptions import ApiException, UserAlreadyExistsException, RequirementParameterMissing
+from app.exceptions import (ApiException, RequirementParameterMissing,
+                            UserAlreadyExistsException)
 from app.models import User
 
 
