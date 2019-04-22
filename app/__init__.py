@@ -40,11 +40,14 @@ def create_app(config_name):
     from app.resources.login import Login
     api.add_resource(Login, '/login')
 
-    from app.resources.deposit_list import DepositList
-    api.add_resource(DepositList, '/deposit')
+    from app.resources.deposit_item import DepositItem
+    api.add_resource(DepositItem, '/deposit/<int:deposit_id>')
 
     from app.resources.nest_api import Nest
     api.add_resource(Nest, '/deposit/nest')
+
+    from app.resources.deposit_list import DepositList
+    api.add_resource(DepositList, '/deposit')
 
     with app.app_context():
         db.create_all()

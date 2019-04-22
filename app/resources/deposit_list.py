@@ -1,15 +1,10 @@
-from flask_restful import Resource, reqparse, marshal, fields
-from flask.json import jsonify
-from app import auth, db
 from flask import make_response
-from app.models import Deposit, User
+from flask.json import jsonify
+from flask_restful import Resource, fields, marshal, reqparse
 
-deposit_schema = {
-    'currency': fields.String,
-    'city': fields.String,
-    'country': fields.String,
-    'amount': fields.Float
-}
+from app import auth, db
+from app.models import Deposit, User
+from app.utils.schema import DepositSchema
 
 
 class DepositList(Resource):
@@ -44,7 +39,7 @@ class DepositList(Resource):
 
         data = Deposit.query.filter_by(user=user.id)
 
-        data = [marshal(deposit, deposit_schema) for deposit in data]
+        data = [marshal(deposit, DepositSchema) for deposit in data]
 
         return make_response(
             jsonify({
