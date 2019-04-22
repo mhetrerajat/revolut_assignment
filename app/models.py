@@ -24,5 +24,10 @@ class User(db.Model):
     def hash_password(self, password):
         return pwd_context.encrypt(password)
 
-    def verify_password(self, password):
-        return pwd_context.verify(password, self.password)
+    @staticmethod
+    @auth.verify_password
+    def verify_password(username, password):
+        user = User.query.filter_by(username=username).first()
+        if not user or not pwd_context.verify(password, user.password):
+            return False
+        return True

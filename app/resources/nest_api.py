@@ -1,12 +1,15 @@
 from flask.json import jsonify
 from flask_restful import Resource, reqparse
 
-from app.utils.parser import Parser
-
+from app import auth
 from app.exceptions import ApiException
+from app.utils.parser import Parser
 
 
 class Nest(Resource):
+
+    decorators = [auth.login_required]
+
     def __init__(self, *args, **kwargs):
 
         self.reqparse = reqparse.RequestParser()
