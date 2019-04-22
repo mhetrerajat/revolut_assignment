@@ -63,6 +63,39 @@ class DepositListTestCases(BaseDepositResourceTestCase):
             self.assertEqual(data.get('message'), 'Unauthorized access')
             self.assertEqual(response.status_code, 401)
 
+    def test_deposit_list_post_missing_input(self):
+        """
+            One of the input is missing in request, here 'currency' is None.
+        """
+        # Create user for auth
+        register_user(self, self.username, self.password)
+
+        # Call Deposit Insert API
+        data = self.data[0]
+        data.update({'currency': None})
+        response = make_deposit_list_post_api_request(self, self.username,
+                                                      self.password, data)
+        data = json.loads(response.data.decode())
+
+        self.assertEqual(data.get('status'), 'failed')
+        self.assertEqual(response.status_code, 400)
+
+    def test_deposit_list_post_invalid_input(self):
+        """
+            One of the input is invalid in request, here 'amount' is List[str] instead of float.
+        """
+        # Create user for auth
+        register_user(self, self.username, self.password)
+
+        # Call Deposit Insert API
+        data = self.data[0]
+        data.update({'amount': [20]})
+        response = make_deposit_list_post_api_request(self, self.username,
+                                                      self.password, data)
+        data = json.loads(response.data.decode())
+
+        self.assertEqual(response.status_code, 400)
+
     def test_deposit_list_get_request(self):
         """
             Validates number of deposits done by the user and returned by the api

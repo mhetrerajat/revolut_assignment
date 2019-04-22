@@ -3,6 +3,7 @@ from flask.json import jsonify
 from flask_restful import Resource, fields, marshal, reqparse
 
 from app import auth, db
+from app.exceptions import RequirementParameterMissing
 from app.models import Deposit, User
 from app.utils.schema import DepositSchema
 
@@ -50,6 +51,10 @@ class DepositList(Resource):
 
     def post(self):
         args = self.reqparse.parse_args()
+
+        # Make sure all parameters are present
+        if any([not v for k, v in args.items()]):
+            raise RequirementParameterMissing(args)
 
         user = User.query.filter_by(username=auth.username()).first()
 
