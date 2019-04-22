@@ -1,9 +1,11 @@
 from datetime import datetime, timedelta
 
+import enum
 from flask import current_app as app
 from passlib.apps import custom_app_context as pwd_context
+from sqlalchemy.types import Enum
 
-from app import db, auth
+from app import auth, db
 
 
 class User(db.Model):
@@ -31,3 +33,22 @@ class User(db.Model):
         if not user or not pwd_context.verify(password, user.password):
             return False
         return True
+
+
+class DepositCurrency(enum.Enum):
+    INR = 0
+    EUR = 1
+    USD = 2
+    GBP = 3
+    FBP = 4
+
+
+class Deposit(db.Model):
+    __tablename__ = 'deposits'
+
+    id = db.Column(db.Integer, primary_key=True)
+    country = db.Column(db.String(64), nullable=False)
+    city = db.Column(db.String(64), nullable=False)
+    currency = db.Column(Enum(DepositCurrency), nullable=False)
+    user = db.Column(db.ForeignKey('users.id'), index=True, nullable=False)
+    amount = db.Column(db.Float(asdecimal=True), nullable=False)
