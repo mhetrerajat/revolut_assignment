@@ -1,9 +1,9 @@
 from passlib.apps import custom_app_context as pwd_context
-
-from app import db, create_app
-from app.models import User, Deposit
-from tests.base import BaseTestCase
 from sqlalchemy.exc import IntegrityError
+
+from app import create_app, db
+from app.models import Deposit, User
+from tests.base import BaseTestCase
 
 from .context import app
 

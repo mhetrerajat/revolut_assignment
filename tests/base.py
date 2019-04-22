@@ -1,7 +1,9 @@
 from flask_testing import TestCase
 
+from app import create_app as _create_app
+from app import db
+
 from .context import app
-from app import db, create_app as _create_app
 
 
 class BaseTestCase(TestCase):

@@ -1,7 +1,8 @@
 import unittest
 
-from .context import app
 from app.utils.parser import Parser
+
+from .context import app
 
 
 class ParserTestCase(unittest.TestCase):
