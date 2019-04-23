@@ -19,9 +19,8 @@ def main(data, nesting_levels):
 if __name__ == "__main__":
 
     help_text = textwrap.dedent('''
-        examples: 
+        Usage: 
                  cat example_input.json | python nest.py currency country city
-                 OR 
                  python nest.py --file input.json currency country city
     ''')
 
