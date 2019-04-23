@@ -82,33 +82,68 @@ Link for problem statement : [here](https://docs.google.com/document/d/11iJO-yoy
 #### Setup
 
 - Pipenv is required to run this project. Installation instruction for pipenv can be found [here](https://github.com/pypa/pipenv)
-- Otherwise, virtualenv can be used. Installation instruction for virtualenv can be found [here](https://github.com/pypa/virtualenv)
+- Otherwise, virtualenv can be used. **requirements.txt** also is given. Installation instruction for virtualenv can be found [here](https://github.com/pypa/virtualenv)
 
 Initialize with dependenciess
-```
+```bash
 cd revolut_assignment
 pipenv shell
 pipenv install
 ```
 
 Build Docker Image 
-```
+```bash
 docker build -t revolut_assignment .
 ```
 
 Run Docker Container
-```
+```bash
 docker run --name revolut_api -d -p 8000:5000 revolut_assignment:latest
-```
-
-Login to Docker Container
-```
-docker exec -it revolut_api /bin/bash
 ```
 
 The REST API is now running on http://localhost:8000/
 
+
+#### Testing and Debugging
+
 To run test cases
-```
+```bash
 make test
 ```
+
+Login to Docker Container
+```bash
+docker exec -it revolut_api /bin/bash
+```
+
+#### Tasks
+
+- To run parse json cli locally
+```bash
+docker exec -it revolut_api /bin/bash -c "cat example_input.json | pipenv run python nest.py currency country city"
+```
+- To use parse json api,
+```bash
+curl -XPOST -H 'Authorization: Basic YWRtaW46YWRtaW4=' -H "Content-type: application/json" -d '{
+    "data": [
+  {
+    "country": "US",
+    "city": "Boston",
+    "currency": "USD",
+    "amount": 100
+  }],
+    "nesting_levels": ["currency" ,"country", "city"]
+}' 'http://localhost:8000/api/v1/deposit/nest'
+```
+- Other api endpoints
+
+Method | Endpoint     | Description
+------------ | ------------ | -------------
+GET | /api/v1/auth/register | This endpoint can be used to create user. These user credentails will be used to do Basic Auth with other API Endpoints. 
+GET | /api/v1/deposit | Fetches all the deposits done by the user.
+POST | /api/v1/deposit/ | Insert deposit amount along with its meta information into database.
+GET | /api/v1/deposit/[int:deposit_id]| Fetches all information about deposit done by the user using deposit_id
+PUT | /api/v1/deposit/[int:deposit_id]|Updates deposit details like amount etc using deposit_id
+DELETE | /api/v1/deposit/[int:deposit_id]| Delete deposit using deposit_id
+POST | /api/v1/deposit/nest/ | Parse JSON APIs
+GET | / | Introduction
