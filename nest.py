@@ -1,15 +1,13 @@
 import argparse
 import json
-import sys
-
 import os
 import sys
+import textwrap
 
+from app.utils.parser import Parser
 
 sys.path.insert(0,
                 os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-from app.utils.parser import Parser
 
 
 def main(data, nesting_levels):
@@ -19,8 +17,22 @@ def main(data, nesting_levels):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('levels', type=str, nargs='*')
+
+    help_text = textwrap.dedent('''
+        examples: 
+                 cat example_input.json | python nest.py currency country city
+                 OR 
+                 python nest.py --file input.json currency country city
+    ''')
+
+    parser = argparse.ArgumentParser(
+        description='Parse JSON file',
+        epilog=help_text,
+        formatter_class=argparse.RawTextHelpFormatter)
+    parser.add_argument('levels',
+                        type=str,
+                        nargs='*',
+                        help='nesting levels for the dict')
     parser.add_argument('--file',
                         nargs='?',
                         type=argparse.FileType('rb'),
@@ -28,7 +40,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args(sys.argv[1:])
 
-    data = args.file.detach().read()
+    data = args.file.detach().read(
+    ) if args.file.name == '<stdin>' else args.file.read()
+
     nesting_levels = args.levels
 
     main(json.loads(data), nesting_levels)
