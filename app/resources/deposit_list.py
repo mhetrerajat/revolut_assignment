@@ -42,7 +42,7 @@ class DepositList(Resource):
 
         user = User.query.filter_by(username=auth.username()).first()
 
-        app.logger.info("Fetched details for user with username : {0}".format(
+        app.logger.debug("Fetched details for user with username : {0}".format(
             auth.username()))
 
         data = Deposit.query.filter_by(user=user.id)
@@ -76,7 +76,7 @@ class DepositList(Resource):
             'user': user.id
         }
 
-        app.logger.info("Adding deposit for user : {0}".format(deposit_item))
+        app.logger.debug("Adding deposit for user : {0}".format(deposit_item))
 
         deposit = Deposit(**deposit_item)
         db.session.add(deposit)
