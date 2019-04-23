@@ -21,9 +21,6 @@ pretty:
 	find . -type f -name "*.py" -exec $(PYTHON) -m yapf --recursive --parallel --in-place --verbose --style=pep8 {} \;
 	find . -type f -name "*.py" -exec $(PYTHON) -m autoflake --in-place --remove-unused-variables {} \;
 
-lint:
-	$(PYTHON) pylint $(PROJECT_HOME) > pylint.log
-
 test:
 	$(PYTHON) -m unittest
 
