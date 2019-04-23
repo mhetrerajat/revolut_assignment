@@ -1,6 +1,7 @@
 from flask import make_response
 from flask.json import jsonify
 from flask_restful import Resource, fields, marshal, reqparse
+from flask import current_app as app
 
 from app import auth, db
 from app.exceptions import RequirementParameterMissing
@@ -35,8 +36,14 @@ class DepositList(Resource):
         super(DepositList, self).__init__()
 
     def get(self):
+        """
+            Fetches all deposits done by the user
+        """
 
         user = User.query.filter_by(username=auth.username()).first()
+
+        app.logger.info("Fetched details for user with username : {0}".format(
+            auth.username()))
 
         data = Deposit.query.filter_by(user=user.id)
 
@@ -50,6 +57,9 @@ class DepositList(Resource):
             }))
 
     def post(self):
+        """
+            Deposit amount along with other meta information of transaction
+        """
         args = self.reqparse.parse_args()
 
         # Make sure all parameters are present
@@ -65,6 +75,9 @@ class DepositList(Resource):
             'amount': args.amount,
             'user': user.id
         }
+
+        app.logger.info("Adding deposit for user : {0}".format(deposit_item))
+
         deposit = Deposit(**deposit_item)
         db.session.add(deposit)
         db.session.commit()
