@@ -1,27 +1,27 @@
 # Revolut Assignment
 Revolut Assignment for Data Engineerning
 
-#### Problem Statement
+### Problem Statement
 Link for problem statement : [here](https://docs.google.com/document/d/11iJO-yoylOamMDneV8WAoo8o6dGpvBghNqhyd5GFWmo/edit)
 
 
-#### SQL
+### SQL
 - Solution is in [sql/solution.sql](sql/solution.sql)
 - Few assumptions have been taken while solving the question. They are mentioned in [sql/README.md](sql/README.md)
 
 
 
-#### Programming
+### Programming
 
 
-##### Requirements
+#### Requirements
 - python 3.6
 - sqllite
 - flask
 - docker
 
 
-##### Project Structure
+#### Project Structure
 ```
 .
 ├── Dockerfile
@@ -79,10 +79,17 @@ Link for problem statement : [here](https://docs.google.com/document/d/11iJO-yoy
 ```
 
 
-##### Tasks
-- [x] Command line utility which takes json as input and convert it into specified nested form. 
+#### Setup
 
+- Pipenv is required to run this project. Installation instruction for pipenv can be found [here](https://github.com/pypa/pipenv)
+- Otherwise, virtualenv can be used. Installation instruction for virtualenv can be found [here](https://github.com/pypa/virtualenv)
 
+Initialize with dependenciess
+```
+cd revolut_assignment
+pipenv shell
+pipenv install
+```
 
 Build Docker Image 
 ```
@@ -97,4 +104,11 @@ docker run --name revolut_api -d -p 8000:5000 revolut_assignment:latest
 Login to Docker Container
 ```
 docker exec -it revolut_api /bin/bash
-```s
+```
+
+The REST API is now running on http://localhost:8000/
+
+To run test cases
+```
+make test
+```
