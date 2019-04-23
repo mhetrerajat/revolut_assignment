@@ -140,10 +140,48 @@ curl -XPOST -H 'Authorization: Basic YWRtaW46YWRtaW4=' -H "Content-type: applica
 Method | Endpoint     | Description
 ------------ | ------------ | -------------
 GET | /api/v1/auth/register | This endpoint can be used to create user. These user credentails will be used to do Basic Auth with other API Endpoints. 
-GET | /api/v1/deposit | Fetches all the deposits done by the user.
+GET | /api/v1/deposit/ | Fetches all the deposits done by the user.
 POST | /api/v1/deposit/ | Insert deposit amount along with its meta information into database.
 GET | /api/v1/deposit/[int:deposit_id]| Fetches all information about deposit done by the user using deposit_id
 PUT | /api/v1/deposit/[int:deposit_id]|Updates deposit details like amount etc using deposit_id
 DELETE | /api/v1/deposit/[int:deposit_id]| Delete deposit using deposit_id
 POST | /api/v1/deposit/nest/ | Parse JSON APIs
 GET | / | Introduction
+
+#### Sample Requests
+
+- Create User
+```bash
+curl -XPOST -H "Content-type: application/json" -d '{
+    "username": "dummy",
+    "password": "dummy"
+}' 'http://localhost:8000/api/v1/auth/register'
+```
+
+- Check deposits done by the user.
+```bash
+curl -XGET -H 'Authorization: Basic YWRtaW46YWRtaW4=' -H "Content-type: application/json" 'http://localhost:8000/api/v1/deposit/'
+```
+
+- Insert deposit 
+```bash
+curl -XPOST -H 'Authorization: Basic YWRtaW46YWRtaW4=' -H "Content-type: application/json" -d '{ "country": "US",
+    "city": "Boston",
+    "currency": "USD",
+    "amount": 100 }' 'http://localhost:8000/api/v1/deposit/'
+```
+
+- Fetches details about deposit with id 1
+```bash
+curl -XGET -H 'Authorization: Basic YWRtaW46YWRtaW4=' -H "Content-type: application/json" 'http://localhost:8000/api/v1/deposit/1'
+```
+
+- Update amount to 1000 for deposit with id 1
+```bash
+curl -XPUT -H 'Authorization: Basic YWRtaW46YWRtaW4=' -H "Content-type: application/json" -d '{"amount": 1000}' 'http://localhost:8000/api/v1/deposit/1'
+```
+
+- Delete deposit with id 1
+```bash
+curl -XDELETE -H 'Authorization: Basic YWRtaW46YWRtaW4=' -H "Content-type: application/json" 'http://localhost:8000/api/v1/deposit/1'
+```
