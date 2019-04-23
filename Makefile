@@ -28,7 +28,7 @@ test:
 	$(PYTHON) -m unittest
 
 requirements:
-	$(PYTHON) pip freeze > requirements.txt
+	$(PYTHON) -m pip freeze > requirements.txt
 
 testdeploy:
 	docker stop $(DOCKER_CONTAINER)
