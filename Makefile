@@ -11,6 +11,8 @@ help:
 	@echo "make test - To run test cases"
 	@echo "make pretty - Does linting and deletes *.pyc files"
 	@echo "make requirements - Makes requirements.txt"
+	@echo "make testdeploy - Build and deploy docker container"
+	@echo "make nest - Short cut to run nest parser cli" 
 
 pretty:
 	find . -name '*.pyc' -delete
@@ -29,7 +31,10 @@ requirements:
 	$(PYTHON) pip freeze > requirements.txt
 
 testdeploy:
-	docker stop $(DOCKER_CONTAINER);docker rm $(DOCKER_CONTAINER);docker rmi $(DOCKER_IMAGE);docker build -t $(DOCKER_IMAGE) .;docker run --name $(DOCKER_CONTAINER) -d -p 8000:5000 $(DOCKER_IMAGE):latest
+	docker stop $(DOCKER_CONTAINER)
+	docker rm $(DOCKER_CONTAINER)
+	docker rmi $(DOCKER_IMAGE);docker build -t $(DOCKER_IMAGE) .
+	docker run --name $(DOCKER_CONTAINER) -d -p 8000:5000 $(DOCKER_IMAGE):latest
 
 nest:
 	cat example_input.json | $(PYTHON) nest.py currency country city 
