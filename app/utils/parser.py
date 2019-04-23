@@ -38,6 +38,7 @@ class Parser(object):
                 leaf_dict = {key: leaf_dict}
             result.append(leaf_dict)
 
+        # Merge all dict with same key
         output = {}
         for item in result:
             dpath.util.merge(output, item)

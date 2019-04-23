@@ -1,7 +1,7 @@
+from flask import current_app as app
 from flask import make_response
 from flask.json import jsonify
 from flask_restful import Resource, fields, marshal, reqparse
-from flask import current_app as app
 
 from app import auth, db
 from app.exceptions import RequirementParameterMissing

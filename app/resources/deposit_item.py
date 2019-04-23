@@ -1,3 +1,4 @@
+from flask import current_app as app
 from flask import make_response
 from flask.json import jsonify
 from flask_restful import Resource, marshal, reqparse
@@ -34,10 +35,14 @@ class DepositItem(Resource):
         super(DepositItem, self).__init__()
 
     def get(self, deposit_id):
+        """
+            Fetches deposit information by deposit id
+        """
         user = User.query.filter_by(username=auth.username()).first()
         deposit = Deposit.query.filter_by(id=deposit_id, user=user.id).first()
 
         if not deposit:
+            app.logger.error("Invalid deposit id : {0}".format(deposit_id))
             raise ApiException("Invalid deposit id.")
 
         return jsonify({
@@ -47,12 +52,16 @@ class DepositItem(Resource):
         })
 
     def put(self, deposit_id):
+        """
+            Update deposit details by deposit id
+        """
         args = self.reqparse.parse_args(strict=True)
 
         user = User.query.filter_by(username=auth.username()).first()
         deposit = Deposit.query.filter_by(id=deposit_id, user=user.id)
 
         if not deposit:
+            app.logger.error("Invalid deposit id : {0}".format(deposit_id))
             raise ApiException("Invalid deposit id")
 
         update_values = {k: v for k, v in args.items() if v}
@@ -71,10 +80,14 @@ class DepositItem(Resource):
             }))
 
     def delete(self, deposit_id):
+        """
+            Delete deposit entry by deposit_id
+        """
         user = User.query.filter_by(username=auth.username()).first()
         deposit = Deposit.query.filter_by(id=deposit_id, user=user.id).first()
 
         if not deposit:
+            app.logger.error("Invalid deposit id : {0}".format(deposit_id))
             raise ApiException("Invalid deposit id")
 
         db.session.delete(deposit)
