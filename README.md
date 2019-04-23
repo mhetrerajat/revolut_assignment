@@ -86,7 +86,7 @@ Link for problem statement : [here](https://docs.google.com/document/d/11iJO-yoy
 
 Initialize with dependenciess
 ```bash
-cd revolut_assignment
+cd revolut_assignment-master
 pipenv shell
 pipenv install
 ```
