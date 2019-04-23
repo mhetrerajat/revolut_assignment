@@ -60,7 +60,7 @@ Link for problem statement : [here](https://docs.google.com/document/d/11iJO-yoy
 ├── run.py
 ├── sql
 │   ├── README.md
-│   ├── init.sql
+│   ├── challenge.sql
 │   ├── solution.sql
 │   └── test_notebook.md
 └── tests
