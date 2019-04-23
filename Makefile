@@ -31,4 +31,5 @@ requirements:
 testdeploy:
 	docker stop $(DOCKER_CONTAINER);docker rm $(DOCKER_CONTAINER);docker rmi $(DOCKER_IMAGE);docker build -t $(DOCKER_IMAGE) .;docker run --name $(DOCKER_CONTAINER) -d -p 8000:5000 $(DOCKER_IMAGE):latest
 
-
+nest:
+	cat example_input.json | $(PYTHON) nest.py currency country city 
