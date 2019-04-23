@@ -35,7 +35,8 @@ if __name__ == "__main__":
     parser.add_argument('--file',
                         nargs='?',
                         type=argparse.FileType('rb'),
-                        default=sys.stdin)
+                        default=sys.stdin,
+                        help="path of json file")
 
     args = parser.parse_args(sys.argv[1:])
 
