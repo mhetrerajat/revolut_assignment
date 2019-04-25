@@ -5,8 +5,8 @@ LABEL MAINTAINER="Rajat Mhetre <mhetrerajat@gmail.com>"
 WORKDIR /app
 
 COPY . /app
-RUN pip install pipenv --dev
-RUN pipenv install
+RUN pip install pipenv
+RUN pipenv install -r requirements.txt
 
 EXPOSE 5000
 
