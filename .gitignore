@@ -108,3 +108,7 @@ venv.bak/
 
 # Migrations
 migrations/*.py
+
+# pipenv
+Pipfile
+*.lock
