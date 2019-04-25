@@ -107,7 +107,7 @@ venv.bak/
 .vscode
 
 # Migrations
-migrations/*.py
+migrations/versions/*.py
 
 # pipenv
 Pipfile
