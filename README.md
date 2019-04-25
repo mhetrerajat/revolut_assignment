@@ -88,7 +88,7 @@ Initialize with dependenciess
 ```bash
 cd revolut_assignment-master
 pipenv shell
-pipenv install
+pipenv install --dev
 ```
 
 Build Docker Image 
